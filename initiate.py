@@ -66,8 +66,8 @@ def insert_activities(product_id, quantity, activator_id, date):
 def insert_data():
     with open(sys.argv[1]) as inputfile:
         for line in inputfile:
-            line = line.strip('\n')
-            line = line.split(",")
+            line = line.strip()
+            line = line.split(", ")
             table = line[0]
             data = line[1:]
             if table == "C":
