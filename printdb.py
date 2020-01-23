@@ -24,18 +24,21 @@ if __name__ == "__main__":
         for row in table:
             print("{} {} {} {}".format(row[0], row[1], row[2], row[3]))
 
-        print('\nActivities')
-        table = cursor.execute(
-            """SELECT Activities.date,Products.description,Activities.quantity,Employees.name,Suppliers.name 
-            FROM Activities
-                   LEFT JOIN Products ON Products.id = product_id
-                   LEFT JOIN Employees ON Employees.id = activator_id
-                   LEFT JOIN Suppliers ON Suppliers.id = activator_id
-                   ORDER BY date
-        """)
-        table.fetchall()
-        for row in table:
-            print(row)
+        cursor.execute("""SELECT COUNT(*) from Activities LIMIT 1""")
+        isExist = cursor.fetchall()
+        if isExist[0][0] > 0:
+            print('\nActivities')
+            table = cursor.execute(
+                """SELECT Activities.date,Products.description,Activities.quantity,Employees.name,Suppliers.name 
+                FROM Activities
+                    LEFT JOIN Products ON Products.id = product_id
+                    LEFT JOIN Employees ON Employees.id = activator_id
+                    LEFT JOIN Suppliers ON Suppliers.id = activator_id
+                    ORDER BY date
+            """)
+            table.fetchall()
+            for row in table:
+                print(row)
 
         cursor.close()
 

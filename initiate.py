@@ -67,7 +67,8 @@ def insert_data():
     with open(sys.argv[1]) as inputfile:
         for line in inputfile:
             line = line.strip()
-            line = line.split(", ")
+            line = line.replace(', ', ',')
+            line = line.split(",")
             table = line[0]
             data = line[1:]
             if table == "C":
