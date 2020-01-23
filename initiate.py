@@ -18,7 +18,7 @@ def create_tables():
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
             contact_information TEXT
-)""")
+        )""")
 
     cursor.execute("""
         CREATE TABLE Products(
@@ -63,6 +63,7 @@ def insert_coffee_stands(id, location, number_of_employees):
 def insert_activities(product_id, quantity, activator_id, date):
     cursor.execute("INSERT INTO Activities VALUES (?,?,?,?)", [product_id, quantity, activator_id, date])
 
+
 def insert_data():
     with open(sys.argv[1]) as inputfile:
         for line in inputfile:
@@ -81,6 +82,11 @@ def insert_data():
                 insert_products(*data)
 
 
+def close_db():
+    dbcon.commit()
+    dbcon.close()
+
+
 if __name__ == '__main__':
     DBExist = os.path.isfile('moncafe.db')
     if DBExist:
@@ -90,11 +96,4 @@ if __name__ == '__main__':
     cursor = dbcon.cursor()
     create_tables()
     insert_data()
-
-
-def close_db():
-    dbcon.commit()
-    dbcon.close()
-
-
-atexit.register(close_db)
+    atexit.register(close_db)
